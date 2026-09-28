@@ -15,7 +15,17 @@ public:
     Base(const std::string& brand,
         const std::string& model);
 
+    Base(const Base& other);
+
     virtual ~Base();
+
+    std::string getBrand() const;
+    std::string getModel() const;
+
+    void setBrand(const std::string& brand);
+    void setModel(const std::string& model);
+
+    Base& operator=(const Base& other);
 
     virtual void print() const = 0;
     virtual void edit() = 0;

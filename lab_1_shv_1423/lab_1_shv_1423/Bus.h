@@ -19,12 +19,24 @@ public:
         int totalPassengers,
         const std::string& destination);
 
+    Bus(const Bus& other);
+
     ~Bus() override;
+
+    int getSeatedPassengers() const;
+    int getTotalPassengers() const;
+    std::string getDestination() const;
+
+    void setSeatedPassengers(int value);
+    void setTotalPassengers(int value);
+    void setDestination(const std::string& value);
 
     void print() const override;
     void edit() override;
 
     std::string getType() const override;
+
+    Bus& operator=(const Bus& other);
 };
 
 #endif
