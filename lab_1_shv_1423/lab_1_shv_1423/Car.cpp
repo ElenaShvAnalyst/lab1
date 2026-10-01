@@ -1,12 +1,13 @@
 #include "Car.h"
-
+#include <iostream>
+#include <iomanip>
 #include <stdexcept>
 
 Car::Car()
     : Base(),
     engineVolume(0.0),
-    color(""),
-    gearboxType("")
+    color("Not specified"),
+    gearboxType("Not specified")
 {
     std::cout << "[Car] Default constructor called\n";
 }
@@ -22,10 +23,8 @@ Car::Car(const std::string& brand,
     gearboxType(gearboxType)
 {
     if (engineVolume <= 0)
-    {
         throw std::invalid_argument(
             "Engine volume must be greater than zero!");
-    }
 
     std::cout << "[Car] Parameterized constructor called\n";
 }
@@ -62,10 +61,8 @@ std::string Car::getGearboxType() const
 void Car::setEngineVolume(double value)
 {
     if (value <= 0)
-    {
         throw std::invalid_argument(
             "Engine volume must be greater than zero!");
-    }
 
     engineVolume = value;
 }
@@ -73,10 +70,8 @@ void Car::setEngineVolume(double value)
 void Car::setColor(const std::string& value)
 {
     if (value.empty())
-    {
         throw std::invalid_argument(
             "Color cannot be empty!");
-    }
 
     color = value;
 }
@@ -84,10 +79,8 @@ void Car::setColor(const std::string& value)
 void Car::setGearboxType(const std::string& value)
 {
     if (value.empty())
-    {
         throw std::invalid_argument(
             "Gearbox type cannot be empty!");
-    }
 
     gearboxType = value;
 }
@@ -95,26 +88,60 @@ void Car::setGearboxType(const std::string& value)
 void Car::print() const
 {
     std::cout << "\n--- CAR ---\n";
-
-    std::cout << "Brand: "
-        << brand << '\n';
-
-    std::cout << "Model: "
-        << model << '\n';
-
+    std::cout << "Brand: " << brand << '\n';
+    std::cout << "Model: " << model << '\n';
     std::cout << "Engine volume: "
         << engineVolume << " L\n";
-
-    std::cout << "Color: "
-        << color << '\n';
-
+    std::cout << "Color: " << color << '\n';
     std::cout << "Gearbox type: "
         << gearboxType << '\n';
 }
 
 void Car::edit()
 {
-    std::cout << "Car editing will be implemented in the final stage.\n";
+    std::string input;
+    double volume;
+
+    std::cout << "New brand: ";
+    std::getline(std::cin, input);
+    setBrand(input);
+
+    std::cout << "New model: ";
+    std::getline(std::cin, input);
+    setModel(input);
+
+    std::cout << "New engine volume: ";
+    std::cin >> volume;
+    std::cin.ignore(10000, '\n');
+    setEngineVolume(volume);
+
+    std::cout << "New color: ";
+    std::getline(std::cin, input);
+    setColor(input);
+
+    std::cout << "New gearbox type: ";
+    std::getline(std::cin, input);
+    setGearboxType(input);
+}
+
+void Car::save(std::ofstream& file) const
+{
+    file << "CAR\n";
+    file << std::quoted(brand) << '\n';
+    file << std::quoted(model) << '\n';
+    file << engineVolume << '\n';
+    file << std::quoted(color) << '\n';
+    file << std::quoted(gearboxType) << '\n';
+}
+
+void Car::load(std::ifstream& file)
+{
+    file >> std::quoted(brand);
+    file >> std::quoted(model);
+    file >> engineVolume;
+    file.ignore(10000, '\n');
+    file >> std::quoted(color);
+    file >> std::quoted(gearboxType);
 }
 
 std::string Car::getType() const

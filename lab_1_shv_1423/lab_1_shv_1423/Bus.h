@@ -23,17 +23,20 @@ public:
 
     ~Bus() override;
 
+    // Get
     int getSeatedPassengers() const;
     int getTotalPassengers() const;
     std::string getDestination() const;
 
+    // Set
     void setSeatedPassengers(int value);
     void setTotalPassengers(int value);
     void setDestination(const std::string& value);
 
     void print() const override;
     void edit() override;
-
+    void save(std::ofstream& file) const override;
+    void load(std::ifstream& file) override;
     std::string getType() const override;
 
     Bus& operator=(const Bus& other);

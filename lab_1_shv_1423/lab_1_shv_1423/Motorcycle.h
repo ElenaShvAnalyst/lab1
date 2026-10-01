@@ -23,17 +23,20 @@ public:
 
     ~Motorcycle() override;
 
+    // Get
     double getEngineVolume() const;
     double getPower() const;
     std::string getPurpose() const;
 
+    // Set
     void setEngineVolume(double value);
     void setPower(double value);
     void setPurpose(const std::string& value);
 
     void print() const override;
     void edit() override;
-
+    void save(std::ofstream& file) const override;
+    void load(std::ifstream& file) override;
     std::string getType() const override;
 
     Motorcycle& operator=(const Motorcycle& other);
